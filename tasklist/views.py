@@ -48,3 +48,12 @@ class TaskRetrieve(
         instance.status = settings.INACTIVE_STATUS
         instance.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class TaskStatus(
+        mixins.MultipleFieldLookupMixin, generics.RetrieveUpdateAPIView):
+    """docstring for TaskStatus"""
+    serializer_class = serializers.TaskStatusSerializer
+    model_class = serializer_class.Meta.model
+    lookup_fields = ('pk',)
+    lookup_url_kwargs = ('task_id',)

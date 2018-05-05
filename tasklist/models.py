@@ -10,14 +10,13 @@ from django.conf import settings
 from django.db import models
 
 from django_extensions.db.models import TimeStampedModel, ActivatorModel
-from auditlog.models import AuditlogHistoryField
-from auditlog.registry import auditlog
+from simple_history.models import HistoricalRecords
+
 # Create your models here.
 
 logs = logging.getLogger(__name__)
 
 
-@auditlog.register()
 class TaskList(ActivatorModel, TimeStampedModel):
     """Database model to store task details"""
     DONE = "Done"
@@ -34,7 +33,13 @@ class TaskList(ActivatorModel, TimeStampedModel):
     description = models.TextField(blank=True, help_text="Task description")
     task_status = models.CharField(
         max_length=100, choices=TASK_CHOICES, help_text="Task choices")
-    history = AuditlogHistoryField()
+
+    history = HistoricalRecords()
+
+    class Meta:
+        app_label = 'tasklist'
+        verbose_name = 'Task List'
+        verbose_name_plural = 'Task Lists'
 
     def __str__(self):
         return "%s - %s - %s" % (self.user, self.name, self.status)
