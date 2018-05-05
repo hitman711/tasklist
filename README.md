@@ -34,6 +34,9 @@ An Example Django REST framework project for filter data from DB with some API r
     mkvirtualenv <env_name> (virtualenv)
 
 * Clone project repository in your system and move inside project folder
+	
+	git clone <repository_link> origin
+
 * Activate virtualenv and install project requirements
 
     pip install -r requirements.txt
